@@ -1,0 +1,164 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ExampleSS = Instance.new("ScreenGui")
+local skid = Instance.new("Frame")
+local source = Instance.new("TextBox")
+local Execute = Instance.new("TextButton")
+local Clear = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ExampleSS.Name = "ExampleSS"
+ExampleSS.Parent = game.CoreGui
+ExampleSS.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+skid.Name = "skid"
+skid.Parent = ExampleSS
+skid.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+skid.BorderColor3 = Color3.fromRGB(0, 0, 0)
+skid.BorderSizePixel = 0
+skid.Position = UDim2.new(0.33872208, 0, 0.354271352, 0)
+skid.Size = UDim2.new(0, 390, 0, 196)
+
+source.Name = "source"
+source.Parent = skid
+source.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+source.BorderColor3 = Color3.fromRGB(0, 0, 0)
+source.BorderSizePixel = 0
+source.Position = UDim2.new(-0.0023035293, 0, 0.170597926, 0)
+source.Size = UDim2.new(0, 390, 0, 118)
+source.Font = Enum.Font.DenkOne
+source.MultiLine = true
+source.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
+source.Text = ""
+source.TextColor3 = Color3.fromRGB(190, 190, 190)
+source.TextSize = 14.000
+source.TextXAlignment = Enum.TextXAlignment.Left
+source.TextYAlignment = Enum.TextYAlignment.Top
+
+Execute.Name = "Execute"
+Execute.Parent = skid
+Execute.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Execute.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Execute.BorderSizePixel = 0
+Execute.Position = UDim2.new(-0.0023035293, 0, 0.773971856, 0)
+Execute.Size = UDim2.new(0, 195, 0, 44)
+Execute.Font = Enum.Font.DenkOne
+Execute.Text = "Execute"
+Execute.TextColor3 = Color3.fromRGB(115, 115, 115)
+Execute.TextSize = 20.000
+
+Clear.Name = "Clear"
+Clear.Parent = skid
+Clear.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Clear.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Clear.BorderSizePixel = 0
+Clear.Position = UDim2.new(0.496529907, 0, 0.773971856, 0)
+Clear.Size = UDim2.new(0, 195, 0, 44)
+Clear.Font = Enum.Font.DenkOne
+Clear.Text = "Clear"
+Clear.TextColor3 = Color3.fromRGB(115, 115, 115)
+Clear.TextSize = 20.000
+Clear.TextWrapped = true
+
+TextLabel.Parent = skid
+TextLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TextLabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(-0.0023035293, 0, -0.00287145493, 0)
+TextLabel.Size = UDim2.new(0, 391, 0, 34)
+TextLabel.Font = Enum.Font.DenkOne
+TextLabel.Text = "Arlock SS loader"
+TextLabel.TextColor3 = Color3.fromRGB(115, 115, 115)
+TextLabel.TextSize = 20.000
+TextLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+
+Execute.MouseButton1Click:connect(function()
+	game.ReplicatedStorage.RemoteEvent:FireServer(source.Text)
+end)
+
+-- Scripts:
+
+local function TPKL_fake_script() -- skid.Drag 
+	local script = Instance.new('LocalScript', skid)
+
+	local frame = script.Parent
+	local dragging = false
+	local dragInput, mousePos, framePos
+	
+	local function update(input)
+		local delta = input.Position - mousePos
+		frame.Position = UDim2.new(
+			framePos.X.Scale,
+			framePos.X.Offset + delta.X,
+			framePos.Y.Scale,
+			framePos.Y.Offset + delta.Y
+		)
+	end
+	
+	frame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = true
+			mousePos = input.Position
+			framePos = frame.Position
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	frame.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement then
+			dragInput = input
+		end
+	end)
+	
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+coroutine.wrap(TPKL_fake_script)()
+local function DAWZGS_fake_script() -- source.donr 
+	local script = Instance.new('LocalScript', source)
+
+	local textBox = script.Parent
+	textBox.ClearTextOnFocus = false
+	
+end
+coroutine.wrap(DAWZGS_fake_script)()
+local function CTPRC_fake_script() -- source.PreserveTextOnFocus 
+	local script = Instance.new('LocalScript', source)
+
+	local textBox = script.Parent
+	textBox.ClearTextOnFocus = false
+	
+	
+end
+coroutine.wrap(CTPRC_fake_script)()
+local function IZOIRI_fake_script() -- ExampleSS.Open/Close 
+	local script = Instance.new('LocalScript', ExampleSS)
+
+	local UserInputService = game:GetService("UserInputService")
+	local screenGui = script.Parent
+	local frame = screenGui:WaitForChild("skid")
+	
+	frame.Visible = true -- изначально видим
+	
+	UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+		if gameProcessedEvent then return end -- если событие уже обработано
+	
+		if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
+			frame.Visible = not frame.Visible -- переключаем видимость
+		end
+	end)
+end
+coroutine.wrap(IZOIRI_fake_script)()
