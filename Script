@@ -5,15 +5,21 @@
 
 local ExampleSS = Instance.new("ScreenGui")
 local skid = Instance.new("Frame")
-local source = Instance.new("TextBox")
+local StatusLabel = Instance.new("TextBox")
 local Execute = Instance.new("TextButton")
 local Clear = Instance.new("TextButton")
 local TextLabel = Instance.new("TextLabel")
+local Checker = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local TextLabel_2 = Instance.new("TextLabel")
+local StatusLabel_2 = Instance.new("TextLabel")
 
 --Properties:
 
 ExampleSS.Name = "ExampleSS"
-ExampleSS.Parent = game.CoreGui
+ExampleSS.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ExampleSS.Enabled = false
 ExampleSS.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 skid.Name = "skid"
@@ -24,21 +30,21 @@ skid.BorderSizePixel = 0
 skid.Position = UDim2.new(0.33872208, 0, 0.354271352, 0)
 skid.Size = UDim2.new(0, 390, 0, 196)
 
-source.Name = "source"
-source.Parent = skid
-source.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-source.BorderColor3 = Color3.fromRGB(0, 0, 0)
-source.BorderSizePixel = 0
-source.Position = UDim2.new(-0.0023035293, 0, 0.170597926, 0)
-source.Size = UDim2.new(0, 390, 0, 118)
-source.Font = Enum.Font.DenkOne
-source.MultiLine = true
-source.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
-source.Text = ""
-source.TextColor3 = Color3.fromRGB(190, 190, 190)
-source.TextSize = 14.000
-source.TextXAlignment = Enum.TextXAlignment.Left
-source.TextYAlignment = Enum.TextYAlignment.Top
+StatusLabel.Name = "StatusLabel"
+StatusLabel.Parent = skid
+StatusLabel.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+StatusLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+StatusLabel.BorderSizePixel = 0
+StatusLabel.Position = UDim2.new(-0.0023035293, 0, 0.170597926, 0)
+StatusLabel.Size = UDim2.new(0, 390, 0, 118)
+StatusLabel.Font = Enum.Font.DenkOne
+StatusLabel.MultiLine = true
+StatusLabel.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
+StatusLabel.Text = ""
+StatusLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+StatusLabel.TextSize = 14.000
+StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+StatusLabel.TextYAlignment = Enum.TextYAlignment.Top
 
 Execute.Name = "Execute"
 Execute.Parent = skid
@@ -77,13 +83,85 @@ TextLabel.TextColor3 = Color3.fromRGB(115, 115, 115)
 TextLabel.TextSize = 20.000
 TextLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
 
+Checker.Name = "Checker"
+Checker.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Checker.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = Checker
+Frame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.63895303, 0, 0.111809045, 0)
+Frame.Size = UDim2.new(0, 433, 0, 219)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.210161656, 0, 0.269159734, 0)
+TextButton.Size = UDim2.new(0, 250, 0, 100)
+TextButton.Font = Enum.Font.DenkOne
+TextButton.Text = "Scan"
+TextButton.TextColor3 = Color3.fromRGB(115, 115, 115)
+TextButton.TextSize = 50.000
+
+TextLabel_2.Parent = Frame
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TextLabel_2.BorderColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BorderSizePixel = 0
+TextLabel_2.Position = UDim2.new(-0.000763714721, 0, -0.00270505575, 0)
+TextLabel_2.Size = UDim2.new(0, 433, 0, 41)
+TextLabel_2.Font = Enum.Font.DenkOne
+TextLabel_2.Text = "Arlock SS loader"
+TextLabel_2.TextColor3 = Color3.fromRGB(115, 115, 115)
+TextLabel_2.TextSize = 20.000
+TextLabel_2.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+
+StatusLabel_2.Name = "StatusLabel"
+StatusLabel_2.Parent = Frame
+StatusLabel_2.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+StatusLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+StatusLabel_2.BorderSizePixel = 0
+StatusLabel_2.Position = UDim2.new(-0.00156464253, 0, 0.828030646, 0)
+StatusLabel_2.Size = UDim2.new(0, 433, 0, 37)
+StatusLabel_2.Font = Enum.Font.DenkOne
+StatusLabel_2.Text = ""
+StatusLabel_2.TextColor3 = Color3.fromRGB(115, 115, 115)
+StatusLabel_2.TextSize = 20.000
+
 Execute.MouseButton1Click:connect(function()
-	game.ReplicatedStorage.RemoteEvent:FireServer(source.Text)
+	game.ReplicatedStorage.RemoteEvent:FireServer(StatusLabel.Text)
 end)
 
 -- Scripts:
 
-local function TPKL_fake_script() -- skid.Drag 
+local function VXPGE_fake_script() -- ExampleSS.Open/Close 
+	local script = Instance.new('LocalScript', ExampleSS)
+
+	local UserInputService = game:GetService("UserInputService")
+	local screenGui = script.Parent
+	local frame = screenGui:WaitForChild("skid")
+	
+	frame.Visible = true -- изначально видим
+	
+	UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+		if gameProcessedEvent then return end -- если событие уже обработано
+	
+		if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
+			frame.Visible = not frame.Visible -- переключаем видимость
+		end
+	end)
+end
+coroutine.wrap(VXPGE_fake_script)()
+local function MVGHNW_fake_script() -- ExampleSS.LocalScript 
+	local script = Instance.new('LocalScript', ExampleSS)
+
+	script.Parent.Execute.MouseButton1Click:Connect(function()
+		require(script.Parent.ExecuteModule)(script.Parent.ScriptBox.Text)()
+	end)
+end
+coroutine.wrap(MVGHNW_fake_script)()
+local function VBHMAAJ_fake_script() -- skid.Drag 
 	local script = Instance.new('LocalScript', skid)
 
 	local frame = script.Parent
@@ -126,39 +204,146 @@ local function TPKL_fake_script() -- skid.Drag
 		end
 	end)
 end
-coroutine.wrap(TPKL_fake_script)()
-local function DAWZGS_fake_script() -- source.donr 
-	local script = Instance.new('LocalScript', source)
+coroutine.wrap(VBHMAAJ_fake_script)()
+local function VMYANGW_fake_script() -- skid.LocalScript 
+	local script = Instance.new('LocalScript', skid)
 
-	local textBox = script.Parent
-	textBox.ClearTextOnFocus = false
+	local button = script.Parent:WaitForChild("Clear") -- замените имя на своё
+	local textbox = script.Parent:WaitForChild("StatusLabel") -- замените имя на своё
+	
+	button.MouseButton1Click:Connect(function()
+		textbox.Text = ""
+	end)
+end
+coroutine.wrap(VMYANGW_fake_script)()
+local function GGLJ_fake_script() -- StatusLabel.donr 
+	local script = Instance.new('LocalScript', StatusLabel)
+
+	local StatusLabel = script.Parent
+	StatusLabel.ClearTextOnFocus = false
 	
 end
-coroutine.wrap(DAWZGS_fake_script)()
-local function CTPRC_fake_script() -- source.PreserveTextOnFocus 
-	local script = Instance.new('LocalScript', source)
+coroutine.wrap(GGLJ_fake_script)()
+local function UGQT_fake_script() -- StatusLabel.PreserveTextOnFocus 
+	local script = Instance.new('LocalScript', StatusLabel)
 
-	local textBox = script.Parent
-	textBox.ClearTextOnFocus = false
+	local StatusLabel = script.Parent
+	StatusLabel.ClearTextOnFocus = false
 	
 	
 end
-coroutine.wrap(CTPRC_fake_script)()
-local function IZOIRI_fake_script() -- ExampleSS.Open/Close 
-	local script = Instance.new('LocalScript', ExampleSS)
+coroutine.wrap(UGQT_fake_script)()
+local function VFNQIT_fake_script() -- Frame.Drag 
+	local script = Instance.new('LocalScript', Frame)
 
-	local UserInputService = game:GetService("UserInputService")
-	local screenGui = script.Parent
-	local frame = screenGui:WaitForChild("skid")
+	local frame = script.Parent
+	local dragging = false
+	local dragInput, mousePos, framePos
 	
-	frame.Visible = true -- изначально видим
+	local function update(input)
+		local delta = input.Position - mousePos
+		frame.Position = UDim2.new(
+			framePos.X.Scale,
+			framePos.X.Offset + delta.X,
+			framePos.Y.Scale,
+			framePos.Y.Offset + delta.Y
+		)
+	end
 	
-	UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-		if gameProcessedEvent then return end -- если событие уже обработано
+	frame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = true
+			mousePos = input.Position
+			framePos = frame.Position
 	
-		if input.KeyCode == Enum.KeyCode.LeftAlt or input.KeyCode == Enum.KeyCode.RightAlt then
-			frame.Visible = not frame.Visible -- переключаем видимость
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	frame.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement then
+			dragInput = input
+		end
+	end)
+	
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
 		end
 	end)
 end
-coroutine.wrap(IZOIRI_fake_script)()
+coroutine.wrap(VFNQIT_fake_script)()
+local function WXCMQ_fake_script() -- TextButton.LocalScript 
+	local script = Instance.new('LocalScript', TextButton)
+
+	local scanButton = script.Parent
+	local guiFrame = scanButton.Parent
+	local statusLabel = guiFrame:FindFirstChild("StatusLabel") -- Переименуй TextLabel, если другое имя
+	
+	scanButton.MouseButton1Click:Connect(function()
+		statusLabel.Text = "Scanning..."
+		statusLabel.Visible = true
+	
+		local susNames = {"remoteevent","RemoteEvent", "backdoor", "exploit", "admin", "re", "cmd", "script"}
+		local backdoorParents = {
+			game.ReplicatedStorage,
+			game.ServerScriptService,
+			game.ServerStorage,
+		}
+	
+		local foundBackdoors = false
+	
+		local function issuspicious(name)
+			name = name:lower()
+			for _, sus in pairs(susNames) do
+				if string.find(name, sus) then
+					return true
+				end
+			end
+			return false
+		end
+	
+		task.wait(0.5)
+	
+		-- Сканируем сначала нужные сервисы
+		for _, parent in pairs(backdoorParents) do
+			for _, obj in pairs(parent:GetDescendants()) do
+				if (obj:IsA("RemoteEvent") or obj:IsA("BindableEvent")) and issuspicious(obj.Name) then
+					foundBackdoors = true
+					break
+				end
+			end
+			if foundBackdoors then break end
+		end
+	
+		-- Потом всю игру
+		if not foundBackdoors then
+			for _, obj in pairs(game:GetDescendants()) do
+				if (obj:IsA("RemoteEvent") or obj:IsA("BindableEvent")) and issuspicious(obj.Name) then
+					foundBackdoors = true
+					break
+				end
+			end
+		end
+	
+		-- Результат
+		if foundBackdoors then
+			statusLabel.Text = "Backdoor found"
+			guiFrame.Visible = false
+	
+			local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+			local exampleGui = playerGui:FindFirstChild("ExampleSS")
+			if exampleGui then
+				exampleGui.Enabled = true
+			end
+		else
+			statusLabel.Text = "No backdoor(:"
+		end
+	end)
+	
+end
+coroutine.wrap(WXCMQ_fake_script)()
